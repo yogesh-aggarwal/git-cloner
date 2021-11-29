@@ -56,7 +56,7 @@ def fetch_by_languages(username: str,
     for repo in repos:
         if repo["language"] is None:
             continue
-        if repo["language"].lower() in languages:
+        if repo["language"].trim().lower() in languages:
             repos_to_be_fetched.append(
                 Repository(username, repo["name"], repo["language"]))
 

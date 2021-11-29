@@ -1,4 +1,5 @@
 import git
+import click
 import utils
 import errors
 
@@ -10,10 +11,27 @@ def setup():
         errors.no_internet_connection()
 
 
-def main():
+@click.command()
+@click.option("--username",
+              prompt="GitHub username",
+              help="Target profile username")
+@click.option("--languages",
+              prompt="Languages",
+              default="all",
+              help="Languages to be fetched")
+@click.option("--create-tree",
+              prompt="Arrange?",
+              default=False,
+              help="Whether to make the directories for arrangements or not")
+def main(username, languages, create_tree):
     setup()
-    git.fetch_all_repos("yogesh-aggarwal")
-    # git.fetch_by_languages("yogesh-aggarwal", ["typescript", "python", "scss"], plain_tree=False)
+    languages = languages.lower()
+    if languages == "all":
+        git.fetch_all_repos(username)
+    else:
+        git.fetch_by_languages("yogesh-aggarwal",
+                               languages.split(","),
+                               plain_tree=not create_tree)
 
 
 if __name__ == "__main__":
