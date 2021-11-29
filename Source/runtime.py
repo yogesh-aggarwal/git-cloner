@@ -12,11 +12,8 @@ def setup():
 
 def main():
     setup()
-    # git.fetch_repos([
-    #     git.Repository("yogesh-aggarwal", "fanatic-data-backend"),
-    #     git.Repository("yogesh-aggarwal", "fanatic-data-backend")
-    # ])
-    git.fetch_by_languages("yogesh-aggarwal", ["python"], plain_tree=False)
+    git.fetch_all_repos("yogesh-aggarwal")
+    # git.fetch_by_languages("yogesh-aggarwal", ["typescript"], plain_tree=False)
 
 
 if __name__ == "__main__":

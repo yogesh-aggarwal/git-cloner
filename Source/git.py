@@ -27,6 +27,19 @@ def fetch_repos(repos: list[Repository]):
         repo.fetch()
 
 
+def fetch_all_repos(username: str, create_user_folder: bool = True):
+    api_response = requests.get(
+        f"https://api.github.com/users/{username}/repos")
+    repos: list[dict] = json.loads(api_response.text)
+    if create_user_folder:
+        os.makedirs(username, exist_ok=True)
+        os.chdir(username)
+    for repo in repos:
+        Repository(username, repo["name"], repo["language"]).fetch()
+    if create_user_folder:
+        os.chdir("../")
+
+
 def fetch_by_languages(username: str,
                        languages: list[str],
                        plain_tree: bool = True):
